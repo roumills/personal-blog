@@ -22,7 +22,7 @@ export default async function Home() {
       {/* Header with ASCII logo */}
       <header className="px-4">
         <div className="max-w-3xl mx-auto">
-          <Link href="/" className="block hover:opacity-80 transition-opacity">
+          <Link href="/" className="block [&_pre]:hover:text-white [&_pre]:transition-colors">
             <AsciiLogo />
           </Link>
         </div>
