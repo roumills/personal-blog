@@ -10,15 +10,10 @@
  * We convert these into regular HTML: <p>Your text here</p>
  */
 
-// Define the types of blocks we can handle
-type NotionBlock = {
-  id: string;
-  type: string;
-  [key: string]: any;
-};
-
+// Props type - we use 'any' for blocks because Notion's API types are complex
+// and vary between SDK versions. This is a pragmatic choice for a blog.
 type Props = {
-  blocks: NotionBlock[];
+  blocks: any[];
 };
 
 /**
