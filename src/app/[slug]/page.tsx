@@ -14,15 +14,9 @@ import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPostSlugs } from "@/lib/notion";
 import NotionBlocks from "@/components/NotionBlocks";
 
-// Re-fetch data every 60 seconds for fresh content
-export const revalidate = 60;
-
-// Tell Next.js what pages to pre-build at compile time
-// This makes the pages load faster
-export async function generateStaticParams() {
-  const slugs = await getAllPostSlugs();
-  return slugs;
-}
+// Fetch fresh data on every request (no caching)
+// This ensures Notion image URLs are always valid
+export const dynamic = "force-dynamic";
 
 // The page component
 // params.slug contains the URL segment (e.g., "my-first-post")
