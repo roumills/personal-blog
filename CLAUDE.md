@@ -15,8 +15,9 @@
 - Use Notion for all content management
 
 ## Notes
-- Post pages use dynamic rendering (fresh Notion API calls on every request) to ensure image URLs never expire
-- Homepage still uses ISR (revalidates every 60 seconds)
+- Both homepage and post pages use ISR (revalidates every 60 seconds)
+- Notion-hosted images may expire after ~1 hour on low-traffic posts
+- TODO: Implement Cloudinary integration for permanent image URLs
 
 ## Teaching Mode
 I'm a designer learning to code. When making changes:

@@ -15,9 +15,10 @@ import { getPostBySlug, getAllPostSlugs } from "@/lib/notion";
 import NotionBlocks from "@/components/NotionBlocks";
 import AsciiLogo from "@/components/AsciiLogo";
 
-// Fetch fresh data on every request (no caching)
-// This ensures Notion image URLs are always valid
-export const dynamic = "force-dynamic";
+// Revalidate every 60 seconds (same as homepage)
+// Note: Notion-hosted images may expire after ~1 hour on low-traffic posts
+// TODO: Implement Cloudinary integration for permanent image URLs
+export const revalidate = 60;
 
 // The page component
 // params.slug contains the URL segment (e.g., "my-first-post")
