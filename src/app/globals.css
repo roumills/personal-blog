@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+/*
+ * Global Styles
+ *
+ * This file contains styles that apply to your entire site.
+ * We're using Tailwind CSS for most styling (the className="..." stuff),
+ * but this file handles base styles and custom additions.
+ */
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
