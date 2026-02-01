@@ -48,7 +48,7 @@ function renderRichText(richText: any[]) {
         <a
           key={`link-${index}`}
           href={text.href}
-          className="text-blue-400 hover:underline"
+          className="text-gray-400 hover:text-white underline transition-colors"
           target="_blank"
           rel="noopener noreferrer"
         >

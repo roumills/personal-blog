@@ -7,6 +7,7 @@
 
 import Link from "next/link";
 import { getPosts } from "@/lib/notion";
+import AsciiLogo from "@/components/AsciiLogo";
 
 // This tells Next.js to re-fetch data periodically (every 60 seconds)
 // So new posts appear without needing to redeploy
@@ -18,42 +19,49 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-black">
-      {/* Header */}
-      <header className="border-b border-gray-800">
-        <div className="max-w-2xl mx-auto px-6 py-8">
-          <h1 className="text-2xl font-bold text-white">My Blog</h1>
-          <p className="text-gray-400 mt-1">Thoughts and ideas</p>
+      {/* Header with ASCII logo */}
+      <header className="px-4">
+        <div className="max-w-3xl mx-auto">
+          <Link href="/" className="block hover:opacity-80 transition-opacity">
+            <AsciiLogo />
+          </Link>
         </div>
       </header>
 
       {/* Posts list */}
-      <div className="max-w-2xl mx-auto px-6 py-12">
+      <div className="max-w-3xl mx-auto px-4">
         {posts.length === 0 ? (
           <p className="text-gray-500">No posts yet. Add some in Notion!</p>
         ) : (
-          <ul className="space-y-8">
-            {posts.map((post) => (
-              <li key={post.id}>
-                <article>
-                  {/* Post date */}
-                  {post.date && (
-                    <time className="text-sm text-gray-500">
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </time>
-                  )}
+          <div>
+            {/* Column headers */}
+            <div className="flex items-center py-3 border-b border-gray-800 text-xs uppercase tracking-wide text-gray-600">
+              <span className="w-12">#</span>
+              <span className="flex-1">Title</span>
+              <span className="w-32 text-right">Date</span>
+            </div>
 
-                  {/* Post title - links to full post */}
-                  <h2 className="text-xl font-semibold text-white mt-1 hover:text-gray-400">
-                    <Link href={`/${post.slug}`}>{post.title}</Link>
-                  </h2>
-                </article>
-              </li>
+            {/* Post rows */}
+            {posts.map((post, index) => (
+              <Link
+                key={post.id}
+                href={`/${post.slug}`}
+                className="flex items-center py-4 border-b border-gray-800/50 text-gray-500 hover:text-white transition-colors group"
+              >
+                <span className="w-12 text-gray-600">{index + 1}</span>
+                <span className="flex-1 font-medium">{post.title}</span>
+                <span className="w-32 text-right text-sm">
+                  {post.date
+                    ? new Date(post.date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })
+                    : ""}
+                </span>
+              </Link>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </main>

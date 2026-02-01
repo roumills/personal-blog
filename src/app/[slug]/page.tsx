@@ -13,6 +13,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getAllPostSlugs } from "@/lib/notion";
 import NotionBlocks from "@/components/NotionBlocks";
+import AsciiLogo from "@/components/AsciiLogo";
 
 // Fetch fresh data on every request (no caching)
 // This ensures Notion image URLs are always valid
@@ -37,33 +38,30 @@ export default async function PostPage({
 
   return (
     <main className="min-h-screen bg-black">
-      {/* Header with back link */}
-      <header className="border-b border-gray-800">
-        <div className="max-w-2xl mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="text-gray-500 hover:text-white text-sm"
-          >
-            ← Back to all posts
+      {/* Header with ASCII logo (links back to home) */}
+      <header className="px-4">
+        <div className="max-w-3xl mx-auto">
+          <Link href="/" className="block hover:opacity-80 transition-opacity">
+            <AsciiLogo />
           </Link>
         </div>
       </header>
 
       {/* Post content */}
-      <article className="max-w-2xl mx-auto px-6 py-12">
+      <article className="max-w-3xl mx-auto px-4 pb-16">
         {/* Post date */}
         {post.date && (
-          <time className="text-sm text-gray-500">
+          <time className="text-sm text-gray-600 uppercase tracking-wide">
             {new Date(post.date).toLocaleDateString("en-US", {
               year: "numeric",
-              month: "long",
+              month: "short",
               day: "numeric",
             })}
           </time>
         )}
 
         {/* Post title */}
-        <h1 className="text-4xl font-bold text-white mt-2 mb-8">
+        <h1 className="text-2xl text-white mt-2 mb-8">
           {post.title}
         </h1>
 
