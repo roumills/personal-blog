@@ -135,6 +135,29 @@ export default function NotionBlocks({ blocks }: Props) {
           case "divider":
             return <hr key={block.id} className="my-8 border-gray-200" />;
 
+          case "image": {
+            const image = block.image;
+            const src = image.type === "external"
+              ? image.external.url
+              : image.file.url;
+            const caption = image.caption?.[0]?.plain_text;
+
+            return (
+              <figure key={block.id} className="my-6">
+                <img
+                  src={src}
+                  alt={caption || ""}
+                  className="rounded-lg max-w-full h-auto"
+                />
+                {caption && (
+                  <figcaption className="text-center text-sm text-gray-500 mt-2">
+                    {caption}
+                  </figcaption>
+                )}
+              </figure>
+            );
+          }
+
           default:
             // For unsupported block types, show nothing (or you could log them)
             return null;
