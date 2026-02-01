@@ -15,8 +15,8 @@
 - Use Notion for all content management
 
 ## Notes
-- Notion-hosted images have expiring URLs (~1hr)
-- ISR revalidates every 60 seconds
+- Post pages use dynamic rendering (fresh Notion API calls on every request) to ensure image URLs never expire
+- Homepage still uses ISR (revalidates every 60 seconds)
 
 ## Teaching Mode
 I'm a designer learning to code. When making changes:

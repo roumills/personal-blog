@@ -17,12 +17,12 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-black">
       {/* Header */}
-      <header className="border-b border-gray-100">
+      <header className="border-b border-gray-800">
         <div className="max-w-2xl mx-auto px-6 py-8">
-          <h1 className="text-2xl font-bold text-gray-900">My Blog</h1>
-          <p className="text-gray-600 mt-1">Thoughts and ideas</p>
+          <h1 className="text-2xl font-bold text-white">My Blog</h1>
+          <p className="text-gray-400 mt-1">Thoughts and ideas</p>
         </div>
       </header>
 
@@ -47,7 +47,7 @@ export default async function Home() {
                   )}
 
                   {/* Post title - links to full post */}
-                  <h2 className="text-xl font-semibold text-gray-900 mt-1 hover:text-gray-600">
+                  <h2 className="text-xl font-semibold text-white mt-1 hover:text-gray-400">
                     <Link href={`/${post.slug}`}>{post.title}</Link>
                   </h2>
                 </article>

@@ -36,7 +36,7 @@ function renderRichText(richText: any[]) {
     }
     if (text.annotations.code) {
       content = (
-        <code key={`code-${index}`} className="bg-gray-100 px-1 rounded text-sm">
+        <code key={`code-${index}`} className="bg-gray-800 px-1 rounded text-sm">
           {content}
         </code>
       );
@@ -48,7 +48,7 @@ function renderRichText(richText: any[]) {
         <a
           key={`link-${index}`}
           href={text.href}
-          className="text-blue-600 hover:underline"
+          className="text-blue-400 hover:underline"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -116,7 +116,7 @@ export default function NotionBlocks({ blocks }: Props) {
             return (
               <blockquote
                 key={block.id}
-                className="border-l-4 border-gray-300 pl-4 italic my-4"
+                className="border-l-4 border-gray-600 pl-4 italic my-4"
               >
                 {renderRichText(block.quote.rich_text)}
               </blockquote>
@@ -133,7 +133,7 @@ export default function NotionBlocks({ blocks }: Props) {
             );
 
           case "divider":
-            return <hr key={block.id} className="my-8 border-gray-200" />;
+            return <hr key={block.id} className="my-8 border-gray-800" />;
 
           case "image": {
             const image = block.image;

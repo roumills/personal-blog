@@ -36,13 +36,13 @@ export default async function PostPage({
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-black">
       {/* Header with back link */}
-      <header className="border-b border-gray-100">
+      <header className="border-b border-gray-800">
         <div className="max-w-2xl mx-auto px-6 py-4">
           <Link
             href="/"
-            className="text-gray-500 hover:text-gray-900 text-sm"
+            className="text-gray-500 hover:text-white text-sm"
           >
             ← Back to all posts
           </Link>
@@ -63,7 +63,7 @@ export default async function PostPage({
         )}
 
         {/* Post title */}
-        <h1 className="text-4xl font-bold text-gray-900 mt-2 mb-8">
+        <h1 className="text-4xl font-bold text-white mt-2 mb-8">
           {post.title}
         </h1>
 
