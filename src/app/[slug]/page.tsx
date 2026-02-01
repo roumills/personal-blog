@@ -2,10 +2,10 @@
  * Individual Post Page
  *
  * This page displays a single blog post.
- * The URL looks like: yourdomain.com/posts/my-first-post
+ * The URL looks like: yourdomain.com/my-first-post
  *
  * The [slug] folder name means this is a "dynamic route" -
- * Next.js will match any URL like /posts/anything and pass
+ * Next.js will match any URL like /anything and pass
  * "anything" to us as params.slug
  */
 

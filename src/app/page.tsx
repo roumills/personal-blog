@@ -48,7 +48,7 @@ export default async function Home() {
 
                   {/* Post title - links to full post */}
                   <h2 className="text-xl font-semibold text-gray-900 mt-1 hover:text-gray-600">
-                    <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+                    <Link href={`/${post.slug}`}>{post.title}</Link>
                   </h2>
                 </article>
               </li>
