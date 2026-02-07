@@ -1,68 +1,46 @@
 /**
- * Homepage - Lists all blog posts
+ * Homepage — Lists all blog posts
  *
- * This is the main page of your blog (yourdomain.com/).
- * It fetches all published posts from Sanity and displays them as a list.
+ * This is the main page of spellbook.fyi.
+ * It shows a hero illustration, a tagline, and a table of all published posts.
+ * Each post row has a black-box hover effect (see PostRow component).
  */
 
-import Link from "next/link";
 import { getPosts } from "@/lib/sanity";
-import AsciiLogo from "@/components/AsciiLogo";
+import HeroIllustration from "@/components/HeroIllustration";
+import PostRow from "@/components/PostRow";
+import FooterLogo from "@/components/FooterLogo";
 
-// This tells Next.js to re-fetch data periodically (every 60 seconds)
-// So new posts appear without needing to redeploy
+// ISR: re-fetch data every 60 seconds so new posts appear without redeploying
 export const revalidate = 60;
 
 export default async function Home() {
-  // Fetch all published posts from Sanity
   const posts = await getPosts();
 
   return (
-    <main className="min-h-screen bg-black">
-      {/* Header with ASCII logo */}
-      <header className="px-4">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/" className="block [&_pre]:hover:text-white [&_pre]:transition-colors">
-            <AsciiLogo />
-          </Link>
-        </div>
-      </header>
+    <main className="min-h-screen">
+      <div className="max-w-5xl mx-auto px-6">
+        {/* Hero illustration */}
+        <HeroIllustration />
 
-      {/* Posts list */}
-      <div className="max-w-3xl mx-auto px-4">
+        {/* Headline — the big intro text from the Figma design */}
+        <h1 className="text-center text-[28px] sm:text-[36px] md:text-[48px] lg:text-[58px] leading-[1.12] tracking-[-0.02em] max-w-[882px] mx-auto mb-[120px]">
+          I&rsquo;m Rou. I help founders &amp; teams use design to build products people love
+        </h1>
+
+        {/* Post table */}
         {posts.length === 0 ? (
-          <p className="text-gray-500">No posts yet. Add some in the Studio!</p>
+          <p className="text-stone-500">No posts yet. Add some in the Studio!</p>
         ) : (
           <div>
-            {/* Column headers */}
-            <div className="flex items-center py-3 border-b border-gray-800 text-xs uppercase tracking-wide text-gray-600">
-              <span className="w-12">#</span>
-              <span className="flex-1">Title</span>
-              <span className="w-32 text-right">Date</span>
-            </div>
-
-            {/* Post rows */}
             {posts.map((post, index) => (
-              <Link
-                key={post.id}
-                href={`/${post.slug}`}
-                className="flex items-center py-4 border-b border-gray-800/50 text-gray-500 hover:text-white transition-colors group"
-              >
-                <span className="w-12 text-gray-600">{index + 1}</span>
-                <span className="flex-1 font-medium">{post.title}</span>
-                <span className="w-32 text-right text-sm">
-                  {post.date
-                    ? new Date(post.date).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })
-                    : ""}
-                </span>
-              </Link>
+              <PostRow key={post.id} post={post} index={index} />
             ))}
           </div>
         )}
+
+        {/* Footer logo */}
+        <FooterLogo />
       </div>
     </main>
   );

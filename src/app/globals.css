@@ -3,16 +3,43 @@
 /*
  * Global Styles
  *
- * This file contains styles that apply to your entire site.
- * We're using Tailwind CSS for most styling (the className="..." stuff),
- * but this file handles base styles and custom additions.
+ * Font: Terrane Sans — a humanist sans-serif from Production Type.
+ * We self-host the .woff2 files so they load fast and don't depend
+ * on any external service.
+ *
+ * @font-face tells the browser: "here's a custom font file to use."
+ * font-display: swap means show a fallback font immediately, then
+ * swap in Terrane Sans once it finishes loading (no invisible text).
  */
 
+@font-face {
+  font-family: "Terrane Sans";
+  src: url("/fonts/TerraneSansWeb-Regular-Trial.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Terrane Sans";
+  src: url("/fonts/TerraneSansWeb-Medium-Trial.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Terrane Sans";
+  src: url("/fonts/TerraneSansWeb-Bold-Trial.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  font-family: "Terrane Sans", Georgia, "Times New Roman", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #000;
-  color: #fff;
+  background-color: #efede7;
+  color: #030303;
 }

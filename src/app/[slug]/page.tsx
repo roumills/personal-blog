@@ -1,71 +1,95 @@
 /**
  * Individual Post Page
  *
- * This page displays a single blog post.
- * The URL looks like: yourdomain.com/my-first-post
- *
- * The [slug] folder name means this is a "dynamic route" -
- * Next.js will match any URL like /anything and pass
- * "anything" to us as params.slug
+ * Displays a single blog post at /{slug}.
+ * Matches the new light beige theme with the hero illustration
+ * at the top (linking back to home), tags, art reference, and
+ * Portable Text body content.
  */
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllPostSlugs } from "@/lib/sanity";
+import { getPostBySlug, urlFor } from "@/lib/sanity";
 import PortableTextRenderer from "@/components/PortableText";
-import AsciiLogo from "@/components/AsciiLogo";
+import HeroIllustration from "@/components/HeroIllustration";
+import FooterLogo from "@/components/FooterLogo";
+import { formatDate } from "@/lib/formatDate";
 
 // Revalidate every 60 seconds (same as homepage)
 export const revalidate = 60;
 
-// The page component
-// params.slug contains the URL segment (e.g., "my-first-post")
 export default async function PostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
-  // Fetch the post from Sanity
   const post = await getPostBySlug(slug);
 
-  // If no post found, show 404 page
   if (!post) {
     notFound();
   }
 
   return (
-    <main className="min-h-screen bg-black">
-      {/* Header with ASCII logo (links back to home) */}
-      <header className="px-4">
-        <div className="max-w-3xl mx-auto">
-          <Link href="/" className="block [&_pre]:hover:text-white [&_pre]:transition-colors">
-            <AsciiLogo />
-          </Link>
-        </div>
-      </header>
+    <main className="min-h-screen">
+      {/* Hero header — same illustration as homepage, links back home */}
+      <div className="max-w-5xl mx-auto px-6">
+        <Link href="/" className="block">
+          <HeroIllustration />
+        </Link>
+      </div>
 
       {/* Post content */}
-      <article className="max-w-3xl mx-auto px-4 pb-16">
-        {/* Post date */}
-        {post.date && (
-          <time className="text-sm text-gray-600 uppercase tracking-wide">
-            {new Date(post.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
-          </time>
-        )}
+      <article className="max-w-3xl mx-auto px-6 pb-16">
+        {/* Back link */}
+        <Link
+          href="/"
+          className="text-[#030303]/50 hover:text-[#030303] transition-colors text-sm mb-8 inline-block"
+        >
+          &larr; Back
+        </Link>
+
+        {/* Post meta: date + tags */}
+        <div className="flex items-center gap-4 mt-8 mb-2">
+          {post.date && (
+            <time className="text-sm text-[#030303]/50 uppercase tracking-wide">
+              {formatDate(post.date)}
+            </time>
+          )}
+          {post.tags?.length > 0 && (
+            <span className="text-sm text-[#030303]/40">
+              {post.tags.join(", ")}
+            </span>
+          )}
+        </div>
 
         {/* Post title */}
-        <h1 className="text-2xl text-white mt-2 mb-8">
+        <h1 className="text-[32px] md:text-[40px] tracking-[-0.02em] leading-tight mt-2 mb-4">
           {post.title}
         </h1>
 
-        {/* Post body - rendered from Sanity Portable Text */}
+        {/* Art reference */}
+        {post.artTitle && (
+          <p className="text-sm text-[#030303]/40 italic mb-8">
+            Art: {post.artTitle}
+          </p>
+        )}
+
+        {/* Art image — displayed using the same urlFor() helper as inline images */}
+        {post.artImage?.asset && (
+          <figure className="my-8">
+            <img
+              src={urlFor(post.artImage).width(800).auto("format").url()}
+              alt={post.artImage.alt || post.artTitle || "Art reference"}
+              className="rounded-lg max-w-full h-auto"
+            />
+          </figure>
+        )}
+
+        {/* Post body — rendered from Sanity Portable Text */}
         <PortableTextRenderer content={post.content} />
+
+        <FooterLogo />
       </article>
     </main>
   );

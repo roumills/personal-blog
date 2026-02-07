@@ -16,12 +16,16 @@ import { createClient } from "next-sanity";
 import { createImageUrlBuilder } from "@sanity/image-url";
 import { projectId, dataset, apiVersion } from "@/sanity/env";
 
-// Simple type for post data (used by page components)
+// Type for post data (used by page components).
+// tags, artTitle, artImage are new fields for the redesign.
 type Post = {
   id: string;
   title: string;
   slug: string;
   date: string | null;
+  tags: string[];
+  artTitle: string | null;
+  artImage: any | null;
 };
 
 // Create a Sanity client instance.
@@ -57,17 +61,22 @@ export async function getPosts(): Promise<Post[]> {
     _id,
     title,
     "slug": slug.current,
-    "date": publishedAt
+    "date": publishedAt,
+    tags,
+    artTitle,
+    artImage
   }`;
 
   const posts = await client.fetch(query);
 
-  // Map to the same shape our page components expect: { id, title, slug, date }
   return posts.map((post: any) => ({
     id: post._id,
     title: post.title,
     slug: post.slug,
     date: post.date,
+    tags: post.tags || [],
+    artTitle: post.artTitle || null,
+    artImage: post.artImage || null,
   }));
 }
 
@@ -86,6 +95,13 @@ export async function getPostBySlug(slug: string) {
     title,
     "slug": slug.current,
     "date": publishedAt,
+    tags,
+    artTitle,
+    artImage {
+      ...,
+      "url": asset->url,
+      "dimensions": asset->metadata.dimensions
+    },
     body[] {
       ...,
       _type == "image" => {
@@ -105,7 +121,10 @@ export async function getPostBySlug(slug: string) {
     title: post.title,
     slug: post.slug,
     date: post.date,
-    content: post.body, // Portable Text array (replaces Notion blocks)
+    tags: post.tags || [],
+    artTitle: post.artTitle || null,
+    artImage: post.artImage || null,
+    content: post.body,
   };
 }
 

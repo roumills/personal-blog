@@ -36,7 +36,7 @@ const components: PortableTextComponents = {
       <h3 className="text-xl font-bold mt-4 mb-2">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-gray-600 pl-4 italic my-4">
+      <blockquote className="border-l-4 border-stone-400 pl-4 italic my-4">
         {children}
       </blockquote>
     ),
@@ -63,12 +63,12 @@ const components: PortableTextComponents = {
     strong: ({ children }) => <strong>{children}</strong>,
     em: ({ children }) => <em>{children}</em>,
     code: ({ children }) => (
-      <code className="bg-gray-800 px-1 rounded text-sm">{children}</code>
+      <code className="bg-stone-200 text-stone-800 px-1.5 py-0.5 rounded text-sm">{children}</code>
     ),
     link: ({ children, value }) => (
       <a
         href={value?.href}
-        className="text-gray-400 hover:text-white underline transition-colors"
+        className="text-stone-600 hover:text-stone-900 underline transition-colors"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -94,7 +94,7 @@ const components: PortableTextComponents = {
             className="rounded-lg max-w-full h-auto"
           />
           {value.caption && (
-            <figcaption className="text-center text-sm text-gray-500 mt-2">
+            <figcaption className="text-center text-sm text-stone-500 mt-2">
               {value.caption}
             </figcaption>
           )}
@@ -102,7 +102,7 @@ const components: PortableTextComponents = {
       );
     },
     code: ({ value }) => (
-      <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto my-4">
+      <pre className="bg-stone-800 text-stone-100 p-4 rounded-lg overflow-x-auto my-4">
         <code>{value.code}</code>
       </pre>
     ),

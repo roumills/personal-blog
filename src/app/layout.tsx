@@ -15,8 +15,9 @@ import "./globals.css";
 
 // Site metadata - shows up in browser tabs and search results
 export const metadata: Metadata = {
-  title: "My Blog",
-  description: "Personal blog powered by Sanity",
+  title: "Spellbook — Rou",
+  description:
+    "I help founders & teams use design to build products people love",
 };
 
 export default function RootLayout({
