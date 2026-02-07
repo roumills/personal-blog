@@ -11,13 +11,11 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllPostSlugs } from "@/lib/notion";
-import NotionBlocks from "@/components/NotionBlocks";
+import { getPostBySlug, getAllPostSlugs } from "@/lib/sanity";
+import PortableTextRenderer from "@/components/PortableText";
 import AsciiLogo from "@/components/AsciiLogo";
 
 // Revalidate every 60 seconds (same as homepage)
-// Note: Notion-hosted images may expire after ~1 hour on low-traffic posts
-// TODO: Implement Cloudinary integration for permanent image URLs
 export const revalidate = 60;
 
 // The page component
@@ -29,7 +27,7 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
 
-  // Fetch the post from Notion
+  // Fetch the post from Sanity
   const post = await getPostBySlug(slug);
 
   // If no post found, show 404 page
@@ -66,8 +64,8 @@ export default async function PostPage({
           {post.title}
         </h1>
 
-        {/* Post body - rendered from Notion blocks */}
-        <NotionBlocks blocks={post.content} />
+        {/* Post body - rendered from Sanity Portable Text */}
+        <PortableTextRenderer content={post.content} />
       </article>
     </main>
   );

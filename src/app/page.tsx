@@ -2,11 +2,11 @@
  * Homepage - Lists all blog posts
  *
  * This is the main page of your blog (yourdomain.com/).
- * It fetches all published posts from Notion and displays them as a list.
+ * It fetches all published posts from Sanity and displays them as a list.
  */
 
 import Link from "next/link";
-import { getPosts } from "@/lib/notion";
+import { getPosts } from "@/lib/sanity";
 import AsciiLogo from "@/components/AsciiLogo";
 
 // This tells Next.js to re-fetch data periodically (every 60 seconds)
@@ -14,7 +14,7 @@ import AsciiLogo from "@/components/AsciiLogo";
 export const revalidate = 60;
 
 export default async function Home() {
-  // Fetch all published posts from Notion
+  // Fetch all published posts from Sanity
   const posts = await getPosts();
 
   return (
@@ -31,7 +31,7 @@ export default async function Home() {
       {/* Posts list */}
       <div className="max-w-3xl mx-auto px-4">
         {posts.length === 0 ? (
-          <p className="text-gray-500">No posts yet. Add some in Notion!</p>
+          <p className="text-gray-500">No posts yet. Add some in the Studio!</p>
         ) : (
           <div>
             {/* Column headers */}

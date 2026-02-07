@@ -2,7 +2,7 @@
 
 ## Stack
 - Next.js 16 (App Router)
-- Notion as CMS
+- Sanity as CMS (Portable Text for content, embedded Studio at /studio)
 - Tailwind CSS 4
 - Deployed on Vercel (auto-deploys from GitHub)
 
@@ -12,12 +12,11 @@
 
 ## Conventions
 - Keep URLs clean (no /posts/ prefix)
-- Use Notion for all content management
+- Use Sanity Studio for all content management (accessible at /studio)
 
 ## Notes
 - Both homepage and post pages use ISR (revalidates every 60 seconds)
-- Notion-hosted images may expire after ~1 hour on low-traffic posts
-- TODO: Implement Cloudinary integration for permanent image URLs
+- Images served from Sanity CDN (permanent URLs, no expiration)
 
 ## Teaching Mode
 I'm a designer learning to code. When making changes:

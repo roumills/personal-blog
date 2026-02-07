@@ -16,7 +16,7 @@ import "./globals.css";
 // Site metadata - shows up in browser tabs and search results
 export const metadata: Metadata = {
   title: "My Blog",
-  description: "Personal blog powered by Notion",
+  description: "Personal blog powered by Sanity",
 };
 
 export default function RootLayout({
