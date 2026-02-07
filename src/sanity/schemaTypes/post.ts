@@ -47,35 +47,14 @@ export default defineType({
       type: "boolean",
       initialValue: false,
     }),
-    // Tags — topics/keywords for this post (shown as columns in the homepage table).
-    // The "tags" layout option makes the Studio render these as nice chips.
+    // Hover Image — a thumbnail that appears when hovering this post on the homepage.
+    // Upload any image you want visitors to see as a preview.
     defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      of: [{ type: "string" }],
-      options: {
-        layout: "tags",
-      },
-      description: "Topics for this post (e.g., AI, Claude, Design)",
-    }),
-
-    // Art Reference — a short text label for the art piece that inspires this post.
-    defineField({
-      name: "artTitle",
-      title: "Art Reference",
-      type: "string",
-      description: 'Art inspiration for this post (e.g., "Silver Warrior, Frazetta")',
-    }),
-
-    // Art Image — the actual artwork image. Uses the same "image" type as inline
-    // images in the body, with hotspot support for smart cropping.
-    defineField({
-      name: "artImage",
-      title: "Art Image",
+      name: "hoverImage",
+      title: "Hover Image",
       type: "image",
       options: { hotspot: true },
-      description: "Upload the art piece referenced in Art Reference",
+      description: "Thumbnail shown when hovering this post on the homepage",
       fields: [
         {
           name: "alt",
@@ -131,16 +110,11 @@ export default defineType({
   ],
   // Preview: what you see in the Studio's post list
   preview: {
-    select: { title: "title", date: "publishedAt", tags: "tags" },
-    prepare({ title, date, tags }) {
+    select: { title: "title", date: "publishedAt" },
+    prepare({ title, date }) {
       return {
         title,
-        subtitle: [
-          date ? new Date(date).toLocaleDateString() : "No date",
-          tags?.length ? tags.join(", ") : null,
-        ]
-          .filter(Boolean)
-          .join(" — "),
+        subtitle: date ? new Date(date).toLocaleDateString() : "No date",
       };
     },
   },

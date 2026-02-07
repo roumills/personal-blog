@@ -17,15 +17,13 @@ import { createImageUrlBuilder } from "@sanity/image-url";
 import { projectId, dataset, apiVersion } from "@/sanity/env";
 
 // Type for post data (used by page components).
-// tags, artTitle, artImage are new fields for the redesign.
+// hoverImageUrl is a pre-built CDN URL for the hover thumbnail.
 type Post = {
   id: string;
   title: string;
   slug: string;
   date: string | null;
-  tags: string[];
-  artTitle: string | null;
-  artImage: any | null;
+  hoverImageUrl: string | null;
 };
 
 // Create a Sanity client instance.
@@ -62,9 +60,7 @@ export async function getPosts(): Promise<Post[]> {
     title,
     "slug": slug.current,
     "date": publishedAt,
-    tags,
-    artTitle,
-    artImage
+    hoverImage
   }`;
 
   const posts = await client.fetch(query);
@@ -74,9 +70,9 @@ export async function getPosts(): Promise<Post[]> {
     title: post.title,
     slug: post.slug,
     date: post.date,
-    tags: post.tags || [],
-    artTitle: post.artTitle || null,
-    artImage: post.artImage || null,
+    hoverImageUrl: post.hoverImage
+      ? urlFor(post.hoverImage).width(400).auto("format").url()
+      : null,
   }));
 }
 
@@ -95,9 +91,7 @@ export async function getPostBySlug(slug: string) {
     title,
     "slug": slug.current,
     "date": publishedAt,
-    tags,
-    artTitle,
-    artImage {
+    hoverImage {
       ...,
       "url": asset->url,
       "dimensions": asset->metadata.dimensions
@@ -121,9 +115,7 @@ export async function getPostBySlug(slug: string) {
     title: post.title,
     slug: post.slug,
     date: post.date,
-    tags: post.tags || [],
-    artTitle: post.artTitle || null,
-    artImage: post.artImage || null,
+    hoverImage: post.hoverImage || null,
     content: post.body,
   };
 }

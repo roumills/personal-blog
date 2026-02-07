@@ -2,9 +2,8 @@
  * Individual Post Page
  *
  * Displays a single blog post at /{slug}.
- * Matches the new light beige theme with the hero illustration
- * at the top (linking back to home), tags, art reference, and
- * Portable Text body content.
+ * Matches the light beige theme with the hero illustration
+ * at the top (linking back to home) and Portable Text body content.
  */
 
 import Link from "next/link";
@@ -49,38 +48,27 @@ export default async function PostPage({
           &larr; Back
         </Link>
 
-        {/* Post meta: date + tags */}
-        <div className="flex items-center gap-4 mt-8 mb-2">
-          {post.date && (
+        {/* Post date */}
+        {post.date && (
+          <div className="mt-8 mb-2">
             <time className="text-sm text-[#030303]/50 uppercase tracking-wide">
               {formatDate(post.date)}
             </time>
-          )}
-          {post.tags?.length > 0 && (
-            <span className="text-sm text-[#030303]/40">
-              {post.tags.join(", ")}
-            </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Post title */}
-        <h1 className="text-[32px] md:text-[40px] tracking-[-0.02em] leading-tight mt-2 mb-4">
+        <h1 className="text-[32px] md:text-[40px] tracking-[-0.02em] leading-tight mt-2 mb-8">
           {post.title}
         </h1>
 
-        {/* Art reference */}
-        {post.artTitle && (
-          <p className="text-sm text-[#030303]/40 italic mb-8">
-            Art: {post.artTitle}
-          </p>
-        )}
-
-        {/* Art image — displayed using the same urlFor() helper as inline images */}
-        {post.artImage?.asset && (
+        {/* Hover image — if the post has one, show it on the post page too */}
+        {post.hoverImage?.asset && (
           <figure className="my-8">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={urlFor(post.artImage).width(800).auto("format").url()}
-              alt={post.artImage.alt || post.artTitle || "Art reference"}
+              src={urlFor(post.hoverImage).width(800).auto("format").url()}
+              alt={post.hoverImage.alt || ""}
               className="rounded-lg max-w-full h-auto"
             />
           </figure>

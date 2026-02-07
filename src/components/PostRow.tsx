@@ -1,69 +1,69 @@
 /**
  * PostRow Component
  *
- * A single row in the homepage post table. This is a client component
- * because we use hover effects — though they're all CSS-based via
- * Tailwind's `group-hover:` pattern, no JavaScript state needed.
+ * A single row in the homepage post list, styled like a book's
+ * table of contents with dot leaders:
  *
- * Hover effect: A black box appears behind the row and text turns white.
- * Inspired by amitlankri.com's project list hover.
+ *   Post Title . . . . . . . . . . . . . . 01
  *
- * Responsive: On mobile, it switches from a 5-column row to a stacked
- * card layout since the columns don't fit on small screens.
+ * On hover, a thumbnail image fades in centered over the post list.
+ * Inspired by clownshowprison.com's table of contents.
+ *
+ * The dot leaders use a CSS trick: a flex-1 span filled with dots,
+ * with overflow:hidden so extra dots get clipped. This way the dots
+ * always fill exactly the space between the title and the number.
  */
 
 "use client";
 
 import Link from "next/link";
-import { formatDate } from "@/lib/formatDate";
 
 type PostRowProps = {
   post: {
     slug: string;
     title: string;
-    tags: string[];
-    date: string | null;
-    artTitle: string | null;
+    hoverImageUrl: string | null;
   };
   index: number;
 };
 
 export default function PostRow({ post, index }: PostRowProps) {
-  // Pad index to always show 2 digits: 1 → "01", 12 → "12"
   const rowNumber = String(index + 1).padStart(2, "0");
 
   return (
     <Link
       href={`/${post.slug}`}
-      className="group relative block"
+      className="group relative flex items-baseline gap-2 py-3 text-[#030303] hover:text-[#030303]/60 transition-colors duration-300"
     >
-      {/* The black background — starts invisible, fades in on hover.
-          -mx-6 px-6 makes it extend beyond the text for a padded box effect. */}
-      <div className="absolute inset-0 -mx-6 bg-black rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Title */}
+      <span className="text-[21px] tracking-[-0.02em] shrink-0">
+        {post.title}
+      </span>
 
-      {/* Desktop layout — 5 columns in a row (hidden on mobile) */}
-      <div className="relative hidden md:flex items-center py-5 text-[#030303] group-hover:text-white transition-colors duration-300">
-        <span className="w-16 text-[18px] shrink-0">{rowNumber}</span>
-        <span className="flex-1 text-[21px] tracking-[-0.42px]">{post.title}</span>
-        <span className="w-44 text-[18px] text-[#030303]/60 group-hover:text-white/60 transition-colors duration-300 shrink-0">
-          {post.tags?.join(", ")}
-        </span>
-        <span className="w-36 text-[18px] text-[#030303]/60 group-hover:text-white/60 transition-colors duration-300 shrink-0">
-          {formatDate(post.date)}
-        </span>
-        <span className="w-48 text-right text-[18px] text-[#030303]/60 group-hover:text-white/60 transition-colors duration-300 shrink-0">
-          {post.artTitle || ""}
-        </span>
-      </div>
+      {/* Dot leaders — fills the space between title and number.
+          flex-1 makes it stretch, overflow-hidden clips extra dots. */}
+      <span className="flex-1 overflow-hidden whitespace-nowrap text-[16px] text-[#030303]/30 leading-none translate-y-[-2px]">
+        {" . ".repeat(200)}
+      </span>
 
-      {/* Mobile layout — stacked card (hidden on desktop) */}
-      <div className="relative flex md:hidden flex-col gap-1 py-4 text-[#030303] group-hover:text-white transition-colors duration-300">
-        <span className="text-[19px] tracking-[-0.38px]">{post.title}</span>
-        <div className="flex gap-3 text-[14px] text-[#030303]/50 group-hover:text-white/50 transition-colors duration-300">
-          {post.tags?.length > 0 && <span>{post.tags.join(", ")}</span>}
-          {post.date && <span>{formatDate(post.date)}</span>}
+      {/* Row number */}
+      <span className="text-[18px] shrink-0">
+        {rowNumber}
+      </span>
+
+      {/* Hover image — centered over the list, fades in on hover.
+          pointer-events-none so it doesn't block clicking the link.
+          Hidden on mobile (no hover on touch devices). */}
+      {post.hoverImageUrl && (
+        <div className="hidden md:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.hoverImageUrl}
+            alt=""
+            className="w-[300px] h-auto rounded-sm"
+          />
         </div>
-      </div>
+      )}
     </Link>
   );
 }

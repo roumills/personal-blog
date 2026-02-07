@@ -3,7 +3,7 @@
  *
  * This is the main page of spellbook.fyi.
  * It shows a hero illustration, a tagline, and a table of all published posts.
- * Each post row has a black-box hover effect (see PostRow component).
+ * Each post row uses dot leaders and reveals a hover image (see PostRow).
  */
 
 import { getPosts } from "@/lib/sanity";
